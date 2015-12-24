@@ -3,9 +3,9 @@
 	<head>
 		<title>Canyon Webcams</title>
 		<meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=1.0'>
-		<meta property="og:image" content="http://slc-canyons.mscalora.com/snow-poster.jpg"/>
+		<meta property="og:image" content="http://utah-cams.com/snow-poster.jpg"/>
         <meta property="fb:app_id" content="530506047106664"/>
-        <meta property="og:url" content="http://slc-canyons.mscalora.com/"/>
+        <meta property="og:url" content="http://utah-cams.com/"/>
         <meta property="og:title" content="SLC Canyon Webcams"/>
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
