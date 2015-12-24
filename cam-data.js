@@ -70,10 +70,10 @@ var cam_data =
 		"title" : "Park City",
 		"link" : "Park City Cams",
 		"cams" : [
-			["something": "http://b7.hdrelay.com/camera/7a4c5213-b515-4ec4-9318-8489f2a255eb/snapshot"],
-			["Ski Beach": "http://common.snow.com/mtncams/CNSkiBeach.jpg"],
-			["Lookout Peak": "http://common.snow.com/mtncams/CNLookoutPeak.jpg"],
-			["Snow Stake": "http://common.snow.com/Mtncams/PCSnowStake.jpg"]
+			["something", "http://b7.hdrelay.com/camera/7a4c5213-b515-4ec4-9318-8489f2a255eb/snapshot"],
+			["Ski Beach", "http://common.snow.com/mtncams/CNSkiBeach.jpg"],
+			["Lookout Peak", "http://common.snow.com/mtncams/CNLookoutPeak.jpg"],
+			["Snow Stake", "http://common.snow.com/Mtncams/PCSnowStake.jpg"]
 		]
 	},
 	"deervalley": {
@@ -88,4 +88,4 @@ var cam_data =
 			["Silver Strike","//cdn.deervalley.com/web/Content/images/webcams/silverstrike.jpg"]
 		]
 	}
-}
+};

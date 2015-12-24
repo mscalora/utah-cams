@@ -1,4 +1,4 @@
 # Use PHP54CGI as default
-AddHandler fcgid54-script .php
+#AddHandler fcgid54-script .php
 Options +SymLinksIfOwnerMatch
 DirectoryIndex index.php

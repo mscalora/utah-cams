@@ -146,14 +146,28 @@
 			return false;
 		}
     });
+    function changeTopic(topic) {
+        $('#main-heading').html(render_header(topic));
+        $('#thumbnails').html(render_articles(topic));
+        $.preload('#thumbnails img', preload_options);
+        $('#links').html(render_links(topic));
+    }
+    $('#links').on('click','a',function(){
+        var it = $(this);
+        var topic = it.attr('href').replace(/^#/,'');
+        changeTopic(topic);
+        return false;
+    });
 
-$.preload('img',{
+var preload_options = {
     placeholder:'camera.jpg',
     notFound:'broken.png'
 //    ,onComplete: function(data) {
 //        if ($(data.element).closest('.zoomed').length)
 //        console.log("%o %o",this,data);
 //    }
-});
+}
+
+$.preload('img', preload_options);
 
 

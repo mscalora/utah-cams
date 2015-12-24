@@ -10,7 +10,7 @@
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="jquery.preload.min.js"></script>
-        <script src="index.json"></script>
+        <script src="cam-data.js"></script>
         <script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -39,27 +39,46 @@
 			 fjs.parentNode.insertBefore(js, fjs);
 		   }(document, 'script', 'facebook-jssdk'));
 		</script>
-		<div id="main">
-            <h2>Big & Little Cottonwood Canyon (SR190 &amp; SR210) Webcams</h2>
-			<div id="thumbnails"><script>
-				var defaultTopic = 'cottonwoods';
-				var topic = (typeof localStorage != "undefined" ? localStorage.topic : defaultTopic) || defaultTopic;
-				function encode(s) {
-					return s.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
-						return '&#'+i.charCodeAt(0)+';';
-					});	
+		<script>
+			var defaultTopic = 'cottonwoods';
+			var topic = (typeof localStorage != "undefined" ? localStorage.topic : defaultTopic) || defaultTopic;
+			function htmlEncode(s) {
+				return s.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+					return '&#'+i.charCodeAt(0)+';';
+				});
+			}
+			function render_header(topic) {
+				return htmlEncode(cam_data[topic].title);
+			}
+			function render_articles(topic) {
+				var html = "";
+				var cams = cam_data[topic].cams;
+				for(var i = 0; i<cams.length; i++) {
+					var cam = cams[i];
+					html += '<article><h4>'+htmlEncode(cam[0])+'</h4><img src="'+htmlEncode(cam[1])+'"/>\n</article>';
 				}
-				function setTopic(topic) {
-					var html = "";
-					var cams = cam_data[topic].cams;
-					for(var i = 0; i<cams.length; i++) {
-						var cam = cams[i];
-						html += '<article><h4>'+encode(cam[0])+'</h4><img src="'+encode(cam[1])+'"/>\n</article>';
+				return html;
+			}
+			function render_links(currentTopic) {
+				var html = "";
+				var topicMap = cam_data;
+				var topics = [];
+				$.each(cam_data, function(name){
+					if (name!==currentTopic) {
+						topics.push(name);
 					}
-					return html;
+				});
+				topics.sort();
+				for(var i = 0; i<topics.length; i++) {
+					topic = topics[i];
+					html += '<a href="#'+htmlEncode(topic)+'">'+htmlEncode(cam_data[topic].link)+'</a> ';
 				}
-				document.write(setTopic(topic));
-			</script></div>
+				return html;
+			}
+		</script>
+		<div id="main">
+            <h2 id="main-heading"><script>document.write(render_header(topic));</script></h2>
+			<div id="thumbnails"><script>document.write(render_articles(topic));</script></div>
             <button id="closer" class="control">
 
             </button>
@@ -67,10 +86,8 @@
 
             </button>
 		</div>
-		<section class="links">
-			<a href="http://sites.mscalora.com/snowbird-cams">Snowbird Mountain Webcams<a>
-			<a href="http://sites.mscalora.com/alta-cams">Alta Mountain Webcams<a>
-			<a href="http://provo-canyon.mscalora.com/">Sundance & Provo Canyon<a>
+		<section id="links" class="links">
+			<script>document.write(render_links(topic));</script>
 		</section>
 <center>
 <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
