@@ -5,7 +5,7 @@
         if (!zoomed.length) {
             return;
         }
-        img = img || $('img', zoomed);
+        img = img || $('.webcam', zoomed);
         var nw = img.prop('naturalWidth');
         var nh = img.prop('naturalHeight');
         var ww = $('html').width();
@@ -23,7 +23,7 @@
                 iw = ih/nh * nw;
             }
         }
-        $('img', zoomed).css({
+        $('.webcam', zoomed).css({
             width: iw,
             height: ih
         });
@@ -41,7 +41,7 @@
     function refreshImage() {
         var zoomer = $('.zoomed');
         if (zoomer.length) {
-            var img = zoomer.find('img');
+            var img = zoomer.find('.webcam');
             img.animate({opacity:0},250).promise().then(function(){
                 img.one('load error abort',function(){
                     img.animate({opacity:1},250);
@@ -56,7 +56,7 @@
 			displau: '',
 			top: '',
 			left: ''
-		}).removeClass('zoomed').find('img').css({
+		}).removeClass('zoomed').find('.webcam').css({
 			width: '',
 			height: ''
 		});
@@ -64,7 +64,7 @@
 	}
 
     function zoomImage(posOrArticle) {
-        var imgs = $('article:not(:has(img[src="broken.png"],img[src="placeholder.png"]))');
+        var imgs = $('article:not(:has(.webcam[src="broken.png"],.webcam[src="placeholder.png"]))');
 		if (typeof posOrArticle==="number") {
 			num = (num + posOrArticle) % imgs.length;
 		} else if (typeof posOrArticle==="object" && posOrArticle.length) {
@@ -110,6 +110,11 @@
 	}
 
     $('body').on('click tap',function(evt){
+    	var link = $(evt.target).closest('.video-link');
+		if (link.length) {			
+			document.location.href = link.attr('href');
+			return false;
+		}
 		var x = evt.pageX;
 		var y = evt.pageY;
         var closer = $('#closer');
@@ -146,11 +151,13 @@
 			return false;
 		}
     });
+
     function changeTopic(topic) {
         $('#main-heading').html(render_header(topic));
         $('#thumbnails').html(render_articles(topic));
-        $.preload('#thumbnails img', preload_options);
+        $.preload('#thumbnails .webcam', preload_options);
         $('#links').html(render_links(topic));
+        localStorage.topic = topic;
     }
     $('#links').on('click','a',function(){
         var it = $(this);
@@ -168,6 +175,6 @@ var preload_options = {
 //    }
 }
 
-$.preload('img', preload_options);
+$.preload('.webcam', preload_options);
 
 

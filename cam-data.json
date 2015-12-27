@@ -1,4 +1,3 @@
-var cam_data = 
 {
 	"cottonwoods": {
 		"title" : "Cottonwood Canyons",
@@ -6,7 +5,7 @@ var cam_data =
 		"cams": [
 			["The Mouth of BCC (Wasatch Blvd & SR190)", "http://commuterlink.utah.gov/1_devices/aux14605.jpeg"],
 			["BCC - SR190 @ MP 4.1 - Dogwood", "http://commuterlink.utah.gov/1_devices/aux16212.jpeg"],
-			["BCC - SR190 @ MP 6.4 - S Curves", "http://commuterlink.utah.gov/1_devices/aux16213.jpeg"],
+			["BCC - SR190 @ MP 6.4 - S Curves", "http://commuterlink.utah.gov/1_devices/aux16213.jpeg", "bcc-scurve"],
 			["BCC - SR190 @ MP 10 - Butler/Mill D South", "http://commuterlink.utah.gov/1_devices/aux16214.jpeg"],
 			["BCC - SR190 @ MP 10.7 - Cardiff Fork", "http://commuterlink.utah.gov/1_devices/aux16215.jpeg"],
 			["BCC - SR190 @ MP 12.54", "http://commuterlink.utah.gov/1_devices/aux16216.jpeg"],
@@ -29,7 +28,7 @@ var cam_data =
 			["Milepost 11","http://commuterlink.utah.gov/1_devices/aux15042.jpeg"],
 			["Milepost 12","http://commuterlink.utah.gov/1_devices/aux15043.jpeg"],
 			["Vivian Park","http://commuterlink.utah.gov/1_devices/aux15044.jpeg"],
-			["Sundance Turnoff","http://commuterlink.utah.gov/1_devices/aux15045.jpeg"],
+			["Sundance Turnoff","http://commuterlink.utah.gov/1_devices/aux15045.jpeg", "sundance-turnoff"],
 			["Milepost 16","http://commuterlink.utah.gov/1_devices/aux15047.jpeg"],
 			["Milepost 17","http://commuterlink.utah.gov/1_devices/aux15048.jpeg"],
 			["Deer Creek Dam","http://commuterlink.utah.gov/1_devices/aux15108.jpeg"],
@@ -87,5 +86,15 @@ var cam_data =
 			["Sultan","//cdn.deervalley.com/web/Content/images/webcams/sultan.jpg"],
 			["Silver Strike","//cdn.deervalley.com/web/Content/images/webcams/silverstrike.jpg"]
 		]
+	},
+	"other": {
+		"title" : "Interesting Regional",
+		"link" : "Miscellaneous Utah Webcams",
+		"cams": [
+			["Island In The Sky","http://eldesierto.org/Isky.jpg"],
+			["Mesa Verde","http://eldesierto.org/Mverde.jpg"],
+			["Bald Mesa","http://eldesierto.org/BaldMesa.jpg"],
+			["Park City","https://b7b.hdrelay.com/cameras/CID_DRLC00000074/GetOneShot"]
+		]
 	}
-};
+}

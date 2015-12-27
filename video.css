@@ -1,0 +1,88 @@
+h3 {
+    text-align: center;
+    margin: 4px 0px 10px;
+}
+#player {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#player video {
+    max-width: 100%;
+}
+
+#container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#controls {
+    text-align: center;
+}
+
+#controls i {
+    margin: 4px 10px;
+}
+
+#player:not(.playing) i.fa-pause {
+    display: none;
+}
+
+#player.playing i.fa-play {
+    display: none;
+}
+
+#screen {
+    text-align: center;
+}
+
+#container ul {
+    list-style: none;
+}
+
+.cams {
+    padding: 0px;
+}
+
+.cams h4 {
+    margin-top: 10px;
+}
+
+.dates {
+    margin: 10px;
+    padding: 0px;
+    text-align: center;
+}
+
+.dates li {
+    margin: 4px 8px;
+    display: inline-block;
+
+}
+
+.dates li i {
+    margin-left: 1em;
+}
+
+.dates a i {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.dates a:hover i {
+    opacity: 1;
+}
+
+.dates a,
+.dates a:hover,
+.dates a:visited,
+.dates a:active {
+    text-decoration: none;
+}
+
+.dates a:hover {
+    color: black;
+}
+

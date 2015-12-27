@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 	<head>
 		<title>Canyon Webcams</title>
@@ -6,11 +6,11 @@
 		<meta property="og:image" content="http://utah-cams.com/snow-poster.jpg"/>
         <meta property="fb:app_id" content="530506047106664"/>
         <meta property="og:url" content="http://utah-cams.com/"/>
-        <meta property="og:title" content="SLC Canyon Webcams"/>
+        <meta property="og:title" content="Utah Webcams"/>
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="jquery.preload.min.js"></script>
-        <script src="cam-data.js"></script>
+        <script src="cam-data.json"></script>
         <script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -18,7 +18,10 @@
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-71689248-1', 'auto'); ga('send', 'pageview');
 		</script>
-        <script>$('body').on('error','img',function(){console.log('error!');$(this).attr('src','broken.jpg');});</script>
+        <script>
+			$('body').on('error','.webcam',function(){console.log('error!');$(this).attr('src','broken.jpg');});
+			var cam_data = <?php echo(file_get_contents('cam-data.json')) ?>;
+		</script>
         <link type="text/css" rel="stylesheet" href="index.css"/>
 	</head>
 	<body>
@@ -55,7 +58,11 @@
 				var cams = cam_data[topic].cams;
 				for(var i = 0; i<cams.length; i++) {
 					var cam = cams[i];
-					html += '<article><h4>'+htmlEncode(cam[0])+'</h4><img src="'+htmlEncode(cam[1])+'"/>\n</article>';
+					html += '<article><h4>'+htmlEncode(cam[0]);
+					if (cam[2]) {
+						html += ' <a class="video-link" href="videos.php?cam='+htmlEncode(cam[2])+'&play=1">&nbsp;<img src="video.png"/></a>';
+					}
+					html += '</h4><img class="webcam" src="'+htmlEncode(cam[1])+'"/>\n</article>';
 				}
 				return html;
 			}
