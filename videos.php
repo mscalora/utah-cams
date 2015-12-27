@@ -24,7 +24,7 @@
         <link type="text/css" rel="stylesheet" href="index.css"/>
     </head>
 <?php
-    $home = isset($_ENV["HOME"]) ? $_ENV["HOME"] : "/Users/mscalora";
+    $home = isset($_ENV["DOCUMENT_ROOT"]) ? dirname($_ENV["DOCUMENT_ROOT"]) : "/Users/mscalora";
     $vpath = "/sites/webcam/videos";
     $vdir = "$home/www$vpath";
     $tdir = "$home/temp";
