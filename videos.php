@@ -51,6 +51,7 @@
 
     $cam_data = json_decode(file_get_contents('cam-data.json'), JSON_OBJECT_AS_ARRAY);
     $cam_dir = array();
+
     foreach($cam_data as $cam_name => $cam_section) {
         foreach($cam_section['cams'] as $cam_array) {
             if (count($cam_array)>2) {

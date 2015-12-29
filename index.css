@@ -28,6 +28,7 @@ article.zoomed {
 	border-radius: 6px;
 	background: #444;
 	display: none;
+	z-index: 1000;
 }
 
 article.zoomed h4 {
@@ -45,6 +46,7 @@ h4 {
 	position: fixed;
 	top: 2px;
 	border: none;
+	z-index: 1100;
 }
 
 .control:focus {
@@ -52,13 +54,13 @@ h4 {
 }
 
 #closer {
-	background: url(close1.png);
+	background: url(close-control.png);
 	background-size: cover;
 	right: 0;
 }
 
 #refresher {
-	background: url(refresh1.png);
+	background: url(refresh-control.png);
 	background-size: cover;
 	left: 0;
 }

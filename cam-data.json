@@ -53,14 +53,9 @@
 		"cams" : [
 			["Cliff Down Canyon","http://www.snowbird.com/imagelib/cliffcam/cliffdown/cliffcam_downcanyon.jpg", "snowbird-down-canyon"],
 			["Little Cloud Bowl","https://www.snowbird.com/imagelib/LCCam/lcbowl/lcbowl_wide.jpg"],
-			["Hidden Peak","http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg"],
 			["Snowbird SnowCam","http://www.snowbird.com/imagelib/SnowCam/SnowCam_main.jpg", "snowbird-snowcam"],
-			["Chickadee", "http://www.snowbird.com/static/media/mountain_cams/chickadee@2x.jpg", "snowbird-chickadee"],
-			["Mineral Basin 1", "http://www.snowbird.com/static/media/mountain_cams/mineral-basin@2x.jpg", "snowbird-mineral-basin"],
-			["Mineral Basin 2", "http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg", "snowbird-peakcam-mineral-basin"],
-			["Gad Valley", "http://www.snowbird.com/static/media/mountain_cams/gad-valley@2x.jpg", "snowbird-gad-valley"],
-			["Peruvian Gulch", "http://www.snowbird.com/static/media/mountain_cams/peruvian-gulch@2x.jpg", "snowbird-peruvian-gulch"],
-			["Hidden Peak - ", "http://www.snowbird.com/static/media/mountain_cams/hidden-peak@2x.jpg", "snowbird-hidden-peak"]
+			["Hidden Peak", "http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg", "snowbird-peakcam-mineral-basin"],
+			["Gad Valley", "http://www.snowbird.com/static/media/mountain_cams/gad-valley@2x.jpg", "snowbird-gad-valley"]
 		]
 	},
 	"solitude": {
@@ -113,7 +108,6 @@
 			["SLC Beck Street & Victory Rd", "http://commuterlink.utah.gov/1_devices/aux180.jpeg", "beck-st-victory-rd-slc"],
 			["I-80 at Wendover, NV - ", "http://commuterlink.utah.gov/1_devices/RWIS%20I-80%20@%20MP1.jpg", "i80-wendover-mp-1"],
 			["I-70 EB @ Sage Flat Rd Salina", "http://www.udottraffic.utah.gov/1_devices/aux16240.jpeg", "i70-sage-flat"],
-			["Orem 800 N 400 W ", "http://commuterlink.utah.gov/1_devices/aux14526.jpeg", "1600N-800W-Orem"],
 			["US40 @ Daniels Summit MP 33.45 - ", "http://commuterlink.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"],
 			["I15 & University Ave Provo ", "http://commuterlink.utah.gov/1_devices/aux15859.jpeg", "i15-university-ave-provo"],
 			["200 S Main St Salt Lake City ", "http://commuterlink.utah.gov/1_devices/aux15525.jpeg", "200s-main-st-slc"],
