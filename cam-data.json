@@ -9,7 +9,7 @@
 			["BCC - SR190 @ MP 10 - Butler/Mill D South", "http://commuterlink.utah.gov/1_devices/aux16214.jpeg"],
 			["BCC - SR190 @ MP 10.7 - Cardiff Fork", "http://commuterlink.utah.gov/1_devices/aux16215.jpeg"],
 			["BCC - SR190 @ MP 12.54", "http://commuterlink.utah.gov/1_devices/aux16216.jpeg"],
-			["Bottom of Little Cottonwood Canyon", "http://commuterlink.utah.gov/1_devices/aux14604.jpeg"],
+			["Bottom of Little Cottonwood Canyon", "http://commuterlink.utah.gov/1_devices/aux14604.jpeg", "mouth-of-lcc"],
 			["LCC - Upper Vault - MP 5.9", "http://commuterlink.utah.gov/1_devices/aux16265.jpeg"],
 			["LCC - Lisa Falls - MP 6.5", "http://commuterlink.utah.gov/1_devices/aux16266.jpeg"],
 			["LCC - Seven Turns - MP 7.4", "http://commuterlink.utah.gov/1_devices/aux16267.jpeg"],
@@ -22,7 +22,7 @@
 		"title" : "Sundance & Provo Canyon",
 		"link" : "Sundance & Provo Canyon UDOT",
 		"cams": [
-			["The Mouth of Provo Canyon","http://commuterlink.utah.gov/1_devices/aux14310.jpeg"],
+			["The Mouth of Provo Canyon","http://commuterlink.utah.gov/1_devices/aux14310.jpeg", "provo-canyon-mouth"],
 			["Lower Diversion Dam","http://commuterlink.utah.gov/1_devices/aux15040.jpeg"],
 			["Canyon Glen Park","http://commuterlink.utah.gov/1_devices/aux15041.jpeg"],
 			["Milepost 11","http://commuterlink.utah.gov/1_devices/aux15042.jpeg"],
@@ -30,9 +30,9 @@
 			["Vivian Park","http://commuterlink.utah.gov/1_devices/aux15044.jpeg"],
 			["Sundance Turnoff","http://commuterlink.utah.gov/1_devices/aux15045.jpeg", "sundance-turnoff"],
 			["Milepost 16","http://commuterlink.utah.gov/1_devices/aux15047.jpeg"],
-			["Milepost 17","http://commuterlink.utah.gov/1_devices/aux15048.jpeg"],
+			["Milepost 17","http://commuterlink.utah.gov/1_devices/aux15048.jpeg", "lower-deer-creek-dam"],
 			["Deer Creek Dam","http://commuterlink.utah.gov/1_devices/aux15108.jpeg"],
-			["AF Canyon","http://commuterlink.utah.gov/1_devices/aux15662.jpeg"],
+			["AF Canyon","http://commuterlink.utah.gov/1_devices/aux15662.jpeg", "af-canyon"],
 			["Sundance Ski Resort","http://72.250.223.164/axis-cgi/jpg/image.cgi"]]
 	},
 	"alta": {
@@ -51,10 +51,16 @@
 		"title" : "Snowbird Mountain",
 		"link" : "Snowbird Mountain Cams",
 		"cams" : [
-			["Cliff Down Canyon","http://www.snowbird.com/imagelib/cliffcam/cliffdown/cliffcam_downcanyon.jpg"],
+			["Cliff Down Canyon","http://www.snowbird.com/imagelib/cliffcam/cliffdown/cliffcam_downcanyon.jpg", "snowbird-down-canyon"],
 			["Little Cloud Bowl","https://www.snowbird.com/imagelib/LCCam/lcbowl/lcbowl_wide.jpg"],
 			["Hidden Peak","http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg"],
-			["Snowbird SnowCam","http://www.snowbird.com/imagelib/SnowCam/SnowCam_main.jpg"]
+			["Snowbird SnowCam","http://www.snowbird.com/imagelib/SnowCam/SnowCam_main.jpg", "snowbird-snowcam"],
+			["Chickadee", "http://www.snowbird.com/static/media/mountain_cams/chickadee@2x.jpg", "snowbird-chickadee"],
+			["Mineral Basin 1", "http://www.snowbird.com/static/media/mountain_cams/mineral-basin@2x.jpg", "snowbird-mineral-basin"],
+			["Mineral Basin 2", "http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg", "snowbird-peakcam-mineral-basin"],
+			["Gad Valley", "http://www.snowbird.com/static/media/mountain_cams/gad-valley@2x.jpg", "snowbird-gad-valley"],
+			["Peruvian Gulch", "http://www.snowbird.com/static/media/mountain_cams/peruvian-gulch@2x.jpg", "snowbird-peruvian-gulch"],
+			["Hidden Peak - ", "http://www.snowbird.com/static/media/mountain_cams/hidden-peak@2x.jpg", "snowbird-hidden-peak"]
 		]
 	},
 	"solitude": {
@@ -89,12 +95,30 @@
 	},
 	"other": {
 		"title" : "Interesting Regional",
-		"link" : "Miscellaneous Utah Webcams",
+		"link" : "Miscellaneous Interesting Webcams",
 		"cams": [
 			["Island In The Sky","http://eldesierto.org/Isky.jpg"],
 			["Mesa Verde","http://eldesierto.org/Mverde.jpg"],
 			["Bald Mesa","http://eldesierto.org/BaldMesa.jpg"],
 			["Park City","https://b7b.hdrelay.com/cameras/CID_DRLC00000074/GetOneShot"]
+		]
+	},
+	"street": {
+		"title" : "Misc Utah City",
+		"link" : "Miscellaneous Utah City Webcams",
+		"cams": [
+			["Parley's Canyon @ East Canyon on I-80", "http://commuterlink.utah.gov/1_devices/aux158.jpeg", "parleys-canyon-i80-east-canyon"],
+			["Triumph Blvd @ Cabelas Blvd Lehi ", "http://commuterlink.utah.gov/1_devices/aux15864.jpeg", "cabelas-lehi"],
+			["I215 E & Parleys Canyon", "http://commuterlink.utah.gov/1_devices/aux148.jpeg", "i215e-parleys-canyon"],
+			["SLC Beck Street & Victory Rd", "http://commuterlink.utah.gov/1_devices/aux180.jpeg", "beck-st-victory-rd-slc"],
+			["I-80 at Wendover, NV - ", "http://commuterlink.utah.gov/1_devices/RWIS%20I-80%20@%20MP1.jpg", "i80-wendover-mp-1"],
+			["I-70 EB @ Sage Flat Rd Salina", "http://www.udottraffic.utah.gov/1_devices/aux16240.jpeg", "i70-sage-flat"],
+			["Orem 800 N 400 W ", "http://commuterlink.utah.gov/1_devices/aux14526.jpeg", "1600N-800W-Orem"],
+			["US40 @ Daniels Summit MP 33.45 - ", "http://commuterlink.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"],
+			["I15 & University Ave Provo ", "http://commuterlink.utah.gov/1_devices/aux15859.jpeg", "i15-university-ave-provo"],
+			["200 S Main St Salt Lake City ", "http://commuterlink.utah.gov/1_devices/aux15525.jpeg", "200s-main-st-slc"],
+			["2100 S @ 1300 E Salt Lake City ", "http://commuterlink.utah.gov/1_devices/aux343.jpeg", "2100s-1300e-slc"],
+			["State St & Center St Orem ", "http://commuterlink.utah.gov/1_devices/aux404.jpeg", "center-st-state-st-orem"]
 		]
 	}
 }

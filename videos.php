@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Canyon Webcams</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=1.0'>
         <meta property="og:image" content="http://utah-cams.com/snow-poster.jpg"/>
         <meta property="fb:app_id" content="530506047106664"/>
@@ -70,14 +71,20 @@
 
 ?>
     <body>
-        <h3>Utah Cams Video</h3>
-        <div id="player" style="display: none">
-            <div id="controls">
-                <i class="fa fa-repeat"></i>
-                <i class="fa fa-play"></i>
-                <i class="fa fa-pause"></i>
-                <i class="fa fa-times"></i>
+        <header id="heading">
+            <div id="info">
+                <a href="./" class="nav-contol fa fa-home"></a>
             </div>
+            <div id="controls">
+                <a href="#" class="video-contol fa fa-repeat"></a>
+                <a href="#" class="video-contol fa fa-play"></a>
+                <a href="#" class="video-contol fa fa-pause"></a>
+                <a href="#" class="video-contol fa fa-times"></a>
+            </div>
+            <h3>Utah Cams Video</h3>
+
+        </header>
+        <div id="player" style="display: none">
             <div id="screen">
                 <video height="480" autobuffer="1" preload="metadata">
 
@@ -119,23 +126,45 @@
         </div>
     </body>
     <script>
-        $('.play-link').on('click', function(evt){
-            if ($('#player').is(':not(:visible)')) {
-                $('#player').slideDown();
+        function togglePlayer(show) {
+            var player =  $('#player');
+            var visible = player.is(':visible');
+            var action = visible ? 'slideUp' : 'slideDown';
+            var action2 = visible ? 'fadeOut' : 'fadeIn';
+            if (show === undefined) {
+                player[action]();
+                $('#controls')[action2]();
+            } else if (visible !== !!show) {
+                player[action]();
+                $('#controls')[action2]();
             }
+        }
+        $('.play-link').on('click', function(evt){
+            togglePlayer(true);
             evt && evt.preventDefault();
             var it = $(this);
             $('#screen video').prop('src',it.attr('href').replace( /.*#/,''))[0].play();
+            var date = it.text();
+            $('#container h4 span').remove();
+            $('<span>').text(' • '+date).appendTo('#container h4');
         });
         $('video').on('play playing pause paused readyStateChange canplay ended waiting', function(evt){
             console.log('%s %s %o %o', evt.type, this.paused, evt, this);
-            $('#player').toggleClass('playing', !this.paused);
+            $('body').toggleClass('playing', !this.paused);
         });
-        $('#player .fa-play').on('click', function(evt) {
+        $('#controls .fa-play').on('click', function(evt) {
             $('video')[0].play();
         });
-        $('#player .fa-pause').on('click', function(evt) {
+        $('#controls .fa-pause').on('click', function(evt) {
             $('video')[0].pause();
+        });
+        $('#controls .fa-repeat').on('click', function(evt) {
+            $('video')[0].currentTime = 0;
+        });
+        $('#controls .fa-times').on('click', function(evt) {
+            $('video')[0].currentTime = 0;
+            $('video')[0].pause();
+            togglePlayer(false);
         });
         if (document.location.search && document.location.search.search(/[?&]play=/)>0) {
             $('.play-link:visible:first').trigger('click');

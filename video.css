@@ -2,6 +2,9 @@ h3 {
     text-align: center;
     margin: 4px 0px 10px;
 }
+
+#container,
+#heading,
 #player {
     max-width: 800px;
     margin-left: auto;
@@ -12,25 +15,51 @@ h3 {
     max-width: 100%;
 }
 
-#container {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+#heading {
+    text-align: center;
+    position: relative;
+}
+
+#info {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#controls {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 #controls {
     text-align: center;
 }
 
-#controls i {
+#heading a,
+#heading a:visited,
+#heading a:active {
     margin: 4px 10px;
+    padding: 4px 10px;
+    color: #666;
+    transition: color, backgound-color 200ms;
+    border-radius: 6px;
+    text-decoration: none;
 }
 
-#player:not(.playing) i.fa-pause {
+#heading a:hover {
+    color: blue;
+    background: #ddd;
+    text-decoration: none;
+}
+
+body:not(.playing) a.fa-pause {
     display: none;
 }
 
-#player.playing i.fa-play {
+body.playing a.fa-play {
     display: none;
 }
 
