@@ -25,10 +25,13 @@
         <link type="text/css" rel="stylesheet" href="index.css"/>
     </head>
 <?php
-    $home = isset($_ENV["DOCUMENT_ROOT"]) ? dirname($_ENV["DOCUMENT_ROOT"]) : "/Users/mscalora";
-    $vpath = "/sites/webcam/videos";
-    $vdir = "$home/www$vpath";
-    $tdir = "$home/temp";
+    $config = parse_ini_file('config.ini', true);
+    $config = is_array($config) ? $config : array();
+    $config["videos"]  = isset($config["videos"]) ? $config["videos"] : array();
+    $home = isset($config["videos"]["home"]) ? trim($config["videos"]["home"]) : preg_replace('|^(/\\w*/\\w*).*|','\1',$_ENV["DOCUMENT_ROOT"]);
+    $vpath = isset($config["videos"]["vpath"]) ? trim($config["videos"]["vpath"]) : "/sites/webcam/videos";
+    $vdir = isset($config["videos"]["vdir"]) ? trim($config["videos"]["vdir"]) : "$home/www$vpath";
+    $tdir = isset($config["videos"]["tdir "]) ? trim($config["videos"]["tdir "]) : "$home/temp";
     DEFINE('RECENT_DEFAULT', 14);
 
     $cam = isset($_REQUEST['cam']) ? $_REQUEST['cam'] : false;
