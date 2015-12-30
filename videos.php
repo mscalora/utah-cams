@@ -90,9 +90,11 @@
         </header>
         <div id="player" style="display: none">
             <div id="screen">
-                <video height="480" autobuffer="1" preload="metadata">
+                <div id="wrapper">
+                    <video height="480" autobuffer="1" preload="metadata">
 
-                </video>
+                    </video>
+                </div>
             </div>
         </div>
         <div id="container">
@@ -147,13 +149,28 @@
             togglePlayer(true);
             evt && evt.preventDefault();
             var it = $(this);
-            $('#screen video').prop('src',it.attr('href').replace( /.*#/,''))[0].play();
+            var video = $('#screen video');
+            var sizes = video.data('sizes');
+            if (sizes) {
+                console.log('Setting sizes %o', sizes);
+                video.css({width: sizes[0], height: sizes[1]});
+            }
+            video.prop('src',it.attr('href').replace( /.*#/,''))[0].play();
             var date = it.text();
             $('#container h4 span').remove();
             $('<span>').text(' • '+date).appendTo('#container h4');
         });
-        $('video').on('play playing pause paused readyStateChange canplay ended waiting', function(evt){
-            console.log('%s %s %o %o', evt.type, this.paused, evt, this);
+        $('video').on('loadedmetadata', function(evt){
+            console.log('Clearing sizes');
+            $('video').css('width','').css('height','');
+        });
+        $('video').on('canplay', function(evt){
+            var v = $('video');
+            v.data('sizes',[v.width(), v.height()]);
+            console.log('Saving sizes %o', v.data('sizes'));
+        });
+        $('video').on('play playing pause paused readyStateChange canplay ended waiting loadedmetadata loadeddata', function(evt){
+            //console.log('%s %s %o %o', evt.type, this.paused, evt, this);
             $('body').toggleClass('playing', !this.paused);
         });
         $('#controls .fa-play').on('click', function(evt) {

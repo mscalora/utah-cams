@@ -67,6 +67,12 @@ body.playing a.fa-play {
     text-align: center;
 }
 
+#wrapper {
+    display: inline-block;
+    background: black;
+    line-height: 0;
+}
+
 #container ul {
     list-style: none;
 }
