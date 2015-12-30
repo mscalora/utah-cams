@@ -10,7 +10,6 @@
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="jquery.preload.min.js"></script>
-        <script src="cam-data.json"></script>
         <script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -43,8 +42,10 @@
 		   }(document, 'script', 'facebook-jssdk'));
 		</script>
 		<script>
-			var defaultTopic = 'cottonwoods';
-			var topic = (typeof localStorage != "undefined" ? localStorage.topic : defaultTopic) || defaultTopic;
+			var topic = document.location.hash.replace(/^#/,'') ||
+				(typeof localStorage != "undefined" ? localStorage.topic : '') ||
+				'cottonwoods';
+			document.location.hash = topic;
 			function htmlEncode(s) {
 				return s.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
 					return '&#'+i.charCodeAt(0)+';';

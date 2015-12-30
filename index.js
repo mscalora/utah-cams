@@ -158,6 +158,7 @@
         $.preload('#thumbnails .webcam', preload_options);
         $('#links').html(render_links(topic));
         localStorage.topic = topic;
+        document.location.hash = topic;
     }
     $('#links').on('click','a',function(){
         var it = $(this);
@@ -177,4 +178,4 @@ var preload_options = {
 
 $.preload('.webcam', preload_options);
 
-
+console.log("HASH: %o", document.location.hash);
