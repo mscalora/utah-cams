@@ -28,11 +28,17 @@
     $config = parse_ini_file('config.ini', true);
     $config = is_array($config) ? $config : array();
     $config["videos"]  = isset($config["videos"]) ? $config["videos"] : array();
-    $home = isset($config["videos"]["home"]) ? trim($config["videos"]["home"]) : preg_replace('|^(/\\w*/\\w*).*|','\1',$_ENV["DOCUMENT_ROOT"]);
-    $vpath = isset($config["videos"]["vpath"]) ? trim($config["videos"]["vpath"]) : "/sites/webcam/videos";
-    $vdir = isset($config["videos"]["vdir"]) ? trim($config["videos"]["vdir"]) : "$home/www$vpath";
-    $tdir = isset($config["videos"]["tdir "]) ? trim($config["videos"]["tdir "]) : "$home/temp";
+    $home = $config["videos"]["home"];
+    $vpathtmpl = $config['videos']['path'];
+    $vurltmpl = $config['videos']['url'];
+    $vdir = sprintf($vpathtmpl, '');
+    $tdir = $home . "/temp";
     DEFINE('RECENT_DEFAULT', 14);
+
+    error_log("Home: ".$home);
+    error_log("Video Dir: ".$vdir);
+    error_log("Temp Dir: ".$tdir);
+
 
     $cam = isset($_REQUEST['cam']) ? $_REQUEST['cam'] : false;
     $list = isset($_REQUEST['list']) ? $_REQUEST['list'] : false;
@@ -110,7 +116,10 @@
                                     $videos = get_videos($cam, $all ? false : RECENT_DEFAULT);
                                     foreach ($videos as $video) {
                                         $date = preg_replace('/.*-(20\d\d-\d\d-\d\d).*/', '\1', $video);
-                                        echo "<li><a class='play-link' href='#//mscalora.com/$vpath/" . $video . "' data-video='$vpath/" . $video . "'><i class='fa fa-play'></i> " . htmlentities($date) . "</a></li>";
+                                        $url = sprintf($vurltmpl, $video);
+                                        $path = sprintf($vpathtmpl, $video);
+                                        $htmldate = htmlentities($date);
+                                        echo "<li><a class='play-link' href='#$url' data-video='$path'><i class='fa fa-play'></i> $htmldate</a></li>";
                                     }
                                     if (!$all) {
                                         echo "<li><a href='?cam=". htmlentities($cam) ."&all=1'>more</a></li>\n";
