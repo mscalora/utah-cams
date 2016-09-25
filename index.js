@@ -178,4 +178,12 @@ var preload_options = {
 
 $.preload('.webcam', preload_options);
 
-console.log("HASH: %o", document.location.hash);
+function adjustFBPadding() {
+  $('.links').css('margin-bottom', $('.fb_iframe_widget').height() + 8);
+}
+
+setTimeout(adjustFBPadding,500);
+setTimeout(adjustFBPadding,1000);
+setTimeout(adjustFBPadding,2500);
+
+//console.log("HASH: %o", document.location.hash);
