@@ -98,6 +98,7 @@
 			<script>document.write(render_links(topic));</script>
 		</section>
 <center>
+<?php if (isset($_REQUEST['ip']) && isset($_SERVER['SERVER_ADDR'])) { echo $_SERVER['SERVER_ADDR']; } ?>
 <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
 </center>
 </body>

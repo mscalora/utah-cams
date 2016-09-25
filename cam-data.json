@@ -25,15 +25,18 @@
 			["The Mouth of Provo Canyon","http://commuterlink.utah.gov/1_devices/aux14310.jpeg", "provo-canyon-mouth"],
 			["Lower Diversion Dam","http://commuterlink.utah.gov/1_devices/aux15040.jpeg"],
 			["Canyon Glen Park","http://commuterlink.utah.gov/1_devices/aux15041.jpeg"],
-			["Milepost 11","http://commuterlink.utah.gov/1_devices/aux15042.jpeg"],
-			["Milepost 12","http://commuterlink.utah.gov/1_devices/aux15043.jpeg"],
-			["Vivian Park","http://commuterlink.utah.gov/1_devices/aux15044.jpeg"],
 			["Sundance Turnoff","http://commuterlink.utah.gov/1_devices/aux15045.jpeg", "sundance-turnoff"],
 			["Milepost 16","http://commuterlink.utah.gov/1_devices/aux15047.jpeg"],
 			["Milepost 17","http://commuterlink.utah.gov/1_devices/aux15048.jpeg", "lower-deer-creek-dam"],
 			["Deer Creek Dam","http://commuterlink.utah.gov/1_devices/aux15108.jpeg"],
+			["Sundance Ski Resort","http://72.250.223.164/axis-cgi/jpg/image.cgi"],
+        ],
+        "inactive-cams" : [
+			["Milepost 11","http://commuterlink.utah.gov/1_devices/aux15042.jpeg"],
+			["Milepost 12","http://commuterlink.utah.gov/1_devices/aux15043.jpeg"],
+			["Vivian Park","http://commuterlink.utah.gov/1_devices/aux15044.jpeg"],
 			["AF Canyon","http://commuterlink.utah.gov/1_devices/aux15662.jpeg", "af-canyon"],
-			["Sundance Ski Resort","http://72.250.223.164/axis-cgi/jpg/image.cgi"]]
+        ]
 	},
 	"alta": {
 		"title" : "Alta Mountain",
@@ -51,12 +54,16 @@
 		"title" : "Snowbird Mountain",
 		"link" : "Snowbird Mountain Cams",
 		"cams" : [
-			["Cliff Down Canyon","http://www.snowbird.com/imagelib/cliffcam/cliffdown/cliffcam_downcanyon.jpg", "snowbird-down-canyon"],
+			["Cliff Down Canyon","http://www.snowbird.com/imagelib/cliffcam/cliffcam_downcanyonchickadee/cliffcam_downcanyonchickadee.jpg", "snowbird-down-canyon"],
 			["Little Cloud Bowl","https://www.snowbird.com/imagelib/LCCam/lcbowl/lcbowl_wide.jpg"],
 			["Snowbird SnowCam","http://www.snowbird.com/imagelib/SnowCam/SnowCam_main.jpg", "snowbird-snowcam"],
-			["Hidden Peak", "http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg", "snowbird-peakcam-mineral-basin"],
-			["Gad Valley", "http://www.snowbird.com/static/media/mountain_cams/gad-valley@2x.jpg", "snowbird-gad-valley"]
-		]
+			["Gad Valley", "http://www.snowbird.com/imagelib/cliffcam/gadvalley/cliffcam_gadvalley.jpg", "snowbird-gad-valley"],
+			["The Cirque", "http://www.snowbird.com/imagelib/cliffcam/thecirque/cliffcam_thecirque.jpg"],
+			["Trail Map", "http://www.snowbird.com/imagelib/trailmaps/Snowbird_WinterTrailMap.jpg"],
+		],
+        "offline-cams" : [
+			["Hidden Peak", "http://www.snowbird.com/imagelib/PeakCam/mineral/PeakCam_Mineral.jpg", "snowbird-peakcam-mineral-basin"]
+        ]
 	},
 	"solitude": {
 		"title" : "Solitude Mountain",
@@ -70,11 +77,13 @@
 		"title" : "Park City",
 		"link" : "Park City Cams",
 		"cams" : [
+			["Lookout Peak", "http://common.snow.com/mtncams/CNLookoutPeak.jpg"],
+		],
+        "inactive-cams" : [
 			["something", "http://b7.hdrelay.com/camera/7a4c5213-b515-4ec4-9318-8489f2a255eb/snapshot"],
 			["Ski Beach", "http://common.snow.com/mtncams/CNSkiBeach.jpg"],
-			["Lookout Peak", "http://common.snow.com/mtncams/CNLookoutPeak.jpg"],
-			["Snow Stake", "http://common.snow.com/Mtncams/PCSnowStake.jpg"]
-		]
+			["Snow Stake", "http://common.snow.com/Mtncams/PCSnowStake.jpg"],
+        ]
 	},
 	"deervalley": {
 		"title" : "Deer Valley",
@@ -85,7 +94,8 @@
 			["Snow Park","//cdn.deervalley.com/web/Content/images/webcams/snowpark.jpg"],
 			["Empire Peak","//cdn.deervalley.com/web/Content/images/webcams/empiretop.jpg"],
 			["Sultan","//cdn.deervalley.com/web/Content/images/webcams/sultan.jpg"],
-			["Silver Strike","//cdn.deervalley.com/web/Content/images/webcams/silverstrike.jpg"]
+			["Silver Strike","//cdn.deervalley.com/web/Content/images/webcams/silverstrike.jpg"],
+            ["Trail Map","//cdn.deervalley.com/web/Content/pdf/planning/trail_maps/DVRWinterTrailMap.jpg"],
 		]
 	},
 	"other": {
@@ -95,7 +105,20 @@
 			["Island In The Sky","http://eldesierto.org/Isky.jpg"],
 			["Mesa Verde","http://eldesierto.org/Mverde.jpg"],
 			["Bald Mesa","http://eldesierto.org/BaldMesa.jpg"],
-			["Park City","https://b7b.hdrelay.com/cameras/CID_DRLC00000074/GetOneShot"]
+			["Park City","https://b7b.hdrelay.com/cameras/CID_DRLC00000074/GetOneShot"],
+            ["U of U Weather", "http://timecam.tv/upload_image_tc/metwest/MeteoWest.jpg"],
+            ["BYU Weather","http://marvin.byu.edu/Weather/webcam800.jpg"],
+            ["Zions NP","https://www.nps.gov/webcams-zion/camera.jpg"],
+            ["Bear Lake","http://bearlakeweather.com/upload/netcam.jpg"],
+            ["South Ogden","http://24.10.201.114/snapshot.jpg"],
+            ["Bountiful Bench SW","http://www.rogowx.org/SW_1min_000.jpg"],
+            ["Bountiful Bench S","http://www.rogowx.org/S_1min_000.jpg"],
+            ["Utah Lake","https://nexusapi.dropcam.com/get_image?width=1900&uuid=0731a258218a462f9c822c967170d36d"],
+            ["Alpine","http://www.wasatchhiker.com/wp-content/uploads/weather/weathercam.jpg"],
+            ["Oak City NE","http://www.finarv.net/weather/cam_1.jpg"],
+            ["Oak City S","http://www.finarv.net/weather/cam_2.jpg"],
+            ["Price","http://wwc.instacam.com/instacamimg/PRCES/PRCES_l.jpg"],
+            ["Bryce Canyon","http://webcam.rubysinn.com/webcam/bryce-canyon-web-cam.jpg"],
 		]
 	},
 	"street": {
@@ -108,11 +131,13 @@
 			["SLC Beck Street & Victory Rd", "http://commuterlink.utah.gov/1_devices/aux180.jpeg", "beck-st-victory-rd-slc"],
 			["I-80 at Wendover, NV - ", "http://commuterlink.utah.gov/1_devices/RWIS%20I-80%20@%20MP1.jpg", "i80-wendover-mp-1"],
 			["I-70 EB @ Sage Flat Rd Salina", "http://www.udottraffic.utah.gov/1_devices/aux16240.jpeg", "i70-sage-flat"],
-			["US40 @ Daniels Summit MP 33.45 - ", "http://commuterlink.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"],
 			["I15 & University Ave Provo ", "http://commuterlink.utah.gov/1_devices/aux15859.jpeg", "i15-university-ave-provo"],
 			["200 S Main St Salt Lake City ", "http://commuterlink.utah.gov/1_devices/aux15525.jpeg", "200s-main-st-slc"],
 			["2100 S @ 1300 E Salt Lake City ", "http://commuterlink.utah.gov/1_devices/aux343.jpeg", "2100s-1300e-slc"],
 			["State St & Center St Orem ", "http://commuterlink.utah.gov/1_devices/aux404.jpeg", "center-st-state-st-orem"]
-		]
+		],
+        "inactive-cams" : [
+			["US40 @ Daniels Summit MP 33.45 - ", "http://commuterlink.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"],
+        ]
 	}
 }
