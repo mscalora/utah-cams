@@ -46,7 +46,13 @@
                 img.one('load error abort',function(){
                     img.animate({opacity:1},250);
                 });
-                img.prop('src',img.prop('src').replace(/\?.*$|$/,'?t='+ $.now()));
+                var src = img.prop('src');
+                if (src.search(/[?&]ucts=/)<0) {
+                    src += (src.search(/[?]/)<0 ? '?' : '&') + 'ucts='+ $.now();
+                } else {
+                    src = src.replace(/([?&])ucts=\d+/,'$1ucts='+$.now());
+                }
+                img.prop('src',src);
             });
         }
     }

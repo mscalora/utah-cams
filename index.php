@@ -3,9 +3,9 @@
 	<head>
 		<title>Canyon Webcams</title>
 		<meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=1.0'>
-		<meta property="og:image" content="http://utah-cams.com/snow-poster.jpg"/>
+		<meta property="og:image" content="https://utah-cams.com/snow-poster.jpg"/>
         <meta property="fb:app_id" content="530506047106664"/>
-        <meta property="og:url" content="http://utah-cams.com/"/>
+        <meta property="og:url" content="https://utah-cams.com/"/>
         <meta property="og:title" content="Utah Webcams"/>
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -63,7 +63,11 @@
 					if (cam[2]) {
 						html += ' <a class="video-link" href="videos.php?cam='+htmlEncode(cam[2])+'&play=1">&nbsp;<img src="video.png"/></a>';
 					}
-					html += '</h4><img class="webcam" src="'+htmlEncode(cam[1])+'"/>\n</article>';
+					var url = cam[1];
+					if (document.location.protocol === 'https:' && url.search(/http:/i) === 0) {
+						url = "<?php echo dirname($_SERVER["SCRIPT_NAME"]); ?>".replace(/^\/$/,'') + "/sec-cam.php?section=" + encodeURIComponent(topic) + '&name=' + encodeURIComponent(cam[0]);
+					}
+					html += '</h4><img class="webcam" src="'+htmlEncode(url)+'"/>\n</article>';
 				}
 				return html;
 			}

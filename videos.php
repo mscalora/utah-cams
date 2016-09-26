@@ -4,9 +4,9 @@
         <title>Canyon Webcams</title>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=1.0'>
-        <meta property="og:image" content="http://utah-cams.com/snow-poster.jpg"/>
+        <meta property="og:image" content="https://utah-cams.com/snow-poster.jpg"/>
         <meta property="fb:app_id" content="530506047106664"/>
-        <meta property="og:url" content="http://utah-cams.com/"/>
+        <meta property="og:url" content="https://utah-cams.com/"/>
         <meta property="og:title" content="Utah Webcams"/>
         <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>

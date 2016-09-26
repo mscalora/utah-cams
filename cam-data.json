@@ -126,18 +126,18 @@
 		"link" : "Miscellaneous Utah City Webcams",
 		"cams": [
 			["Parley's Canyon @ East Canyon on I-80", "https://udottraffic.utah.gov/1_devices/aux158.jpeg", "parleys-canyon-i80-east-canyon"],
-			["Triumph Blvd @ Cabelas Blvd Lehi ", "https://udottraffic.utah.gov/1_devices/aux15864.jpeg", "cabelas-lehi"],
+			["Triumph Blvd @ Cabelas Blvd Lehi", "https://udottraffic.utah.gov/1_devices/aux15864.jpeg", "cabelas-lehi"],
 			["I215 E & Parleys Canyon", "https://udottraffic.utah.gov/1_devices/aux148.jpeg", "i215e-parleys-canyon"],
 			["SLC Beck Street & Victory Rd", "https://udottraffic.utah.gov/1_devices/aux180.jpeg", "beck-st-victory-rd-slc"],
-			["I-80 at Wendover, NV - ", "https://udottraffic.utah.gov/1_devices/RWIS%20I-80%20@%20MP1.jpg", "i80-wendover-mp-1"],
+			["I-80 at Wendover, NV -", "https://udottraffic.utah.gov/1_devices/RWIS%20I-80%20@%20MP1.jpg", "i80-wendover-mp-1"],
 			["I-70 EB @ Sage Flat Rd Salina", "http://www.udottraffic.utah.gov/1_devices/aux16240.jpeg", "i70-sage-flat"],
-			["I15 & University Ave Provo ", "https://udottraffic.utah.gov/1_devices/aux15859.jpeg", "i15-university-ave-provo"],
-			["200 S Main St Salt Lake City ", "https://udottraffic.utah.gov/1_devices/aux15525.jpeg", "200s-main-st-slc"],
-			["2100 S @ 1300 E Salt Lake City ", "https://udottraffic.utah.gov/1_devices/aux343.jpeg", "2100s-1300e-slc"],
-			["State St & Center St Orem ", "https://udottraffic.utah.gov/1_devices/aux404.jpeg", "center-st-state-st-orem"]
+			["I15 & University Ave Provo", "https://udottraffic.utah.gov/1_devices/aux15859.jpeg", "i15-university-ave-provo"],
+			["200 S Main St Salt Lake City", "https://udottraffic.utah.gov/1_devices/aux15525.jpeg", "200s-main-st-slc"],
+			["2100 S @ 1300 E Salt Lake City", "https://udottraffic.utah.gov/1_devices/aux343.jpeg", "2100s-1300e-slc"],
+			["State St & Center St Orem", "https://udottraffic.utah.gov/1_devices/aux404.jpeg", "center-st-state-st-orem"]
 		],
         "inactive-cams" : [
-			["US40 @ Daniels Summit MP 33.45 - ", "https://udottraffic.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"]
+			["US40 @ Daniels Summit MP 33.45 -", "https://udottraffic.utah.gov/1_devices/aux15578.jpeg", "daniels-summit-mp-33"]
         ]
 	}
 }
