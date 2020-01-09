@@ -1,1 +1,0 @@
-# utah-cams

@@ -1,8 +1,0 @@
-# Use PHP54CGI as default
-#AddHandler fcgid54-script .php
-Options +SymLinksIfOwnerMatch
-DirectoryIndex index.php
-
-RewriteEngine On 
-RewriteCond %{SERVER_PORT} 80 
-RewriteRule ^(.*)$ https://utah-cams.com/$1 [R,L]

@@ -1,0 +1,893 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Utah Webcams</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta property="og:image" content="https://utah-cams.com/cams.jpg"/>
+  <meta property="fb:app_id" content="530506047106664"/>
+  <meta property="og:url" content="https://utah-cams.com/"/>
+  <meta property="og:title" content="Utah Webcams"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
+
+  <link rel="manifest" href="site.webmanifest">
+  <!--<link rel="apple-touch-icon" href="icon.png">-->
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+  <script src="//code.jquery.com/pep/0.4.3/pep.js"></script>
+  <script src="cam-data.js"></script>
+  <script src="cam-data-test.js"></script>
+  <style>
+    html {
+      font-family: sans-serif;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100%;
+      min-height: 100%;
+      Xoutline: 4px dashed red;
+      Xoutline-offset: -2px;
+      margin: 0;
+      padding: 0;
+    }
+    .is-test-mode body:before {
+      content: attr(env-classes);
+      position: absolute;
+      display: block;
+      top: 35px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      color: red;
+      font-size: 12px;
+      background: #ffffffdd;
+      text-align: center;
+    }
+    html.is-phone,
+    html.is-tablet,
+    html.is-phone body,
+    html.is-tablet body{
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .is-phone body {
+      Xbackground: #ddf;
+    }
+    .is-tablet body {
+      Xbackground: #dfd;
+    }
+    .cam-staged .zone-title {
+      display: none;
+    }
+    .zone-title {
+      margin: 0;
+      padding: 6px 10px;
+      text-align: center;
+    }
+    .stage-title {
+      padding-top: 4px;
+      font-size: 20px;
+    }
+    .wrapper {
+      max-width: 100vw;
+      overflow: hidden;
+    }
+    .main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cam {
+      display: inline-block;
+      margin: 4px 8px;
+      vertical-align: top;
+    }
+    .cam[source-host="udottraffic-utah-gov"] {
+      Xoutline: 1px dashed red;
+    }
+    .cam[source-host="udottraffic-utah-gov"] .name,
+    .cam[source-host="udottraffic-utah-gov"] .time-stamp {
+      position: relative;
+      z-index: 10;
+    }
+    .cam[source-host="udottraffic-utah-gov"] .image-container {
+      position: relative;
+      top: -11px;
+    }
+    .cam[cam-status="loading"] .camera {
+      width: 320px;
+      height: 240px;
+    }
+    .cam[cam-status="error"] {
+      outline: 2px solid #ddd;
+    }
+    .cam[cam-status="error"] .image-container {
+      width: 320px;
+      height: 229px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .cam[cam-status="error"] .camera {
+      display: none;
+    }
+    .cam:not([cam-status="error"]) .load-error {
+      display: none;
+    }
+    .cam .camera {
+      max-width: 320px;
+    }
+    .is-full-width .cam,
+    .is-full-width .cam .camera {
+      width: calc(100vw - 20px);
+      max-width: calc(100vw - 20px);
+      max-height: calc(100vh - 20px);
+    }
+
+    img {
+      touch-action: auto;
+    }
+
+    html.is-tablet:not(.is-full-width) .cam,
+    html.is-tablet:not(.is-full-width) .cam .camera {
+      width: calc(50vw - 30px);
+      max-width: calc(50vw - 30px);
+      max-height: calc(50vw - 30px * 0.75);
+    }
+
+    .cam .name {
+      text-align: center;
+      background: #eee;
+    }
+    .global-actions,
+    nav {
+      font-size: 12px;
+      margin: 4px 8px;
+      text-align: center;
+    }
+    html.is-tablet nav {
+      font-szie: 14px;
+    }
+    html.is-phone nav {
+      font-szie: 16px;
+    }
+    nav .item {
+      display: inline-block;
+      cursor: default;
+      outline: 1px solid #ddd;
+      margin-right: 8px;
+      padding: 3px;
+      transition: all 250ms;
+      cursor: pointer;
+    }
+    nav .item:hover {
+      color: white;
+      background: black;
+    }
+    .item[sel-item="1"] {
+      outline: 1px solid black;
+    }
+    .time-stamp {
+      text-align: center;
+      font-size: 9px;
+      background: #eee;
+    }
+    .stage {
+      text-align: center;
+    }
+    .stage img {
+      width: calc(100vw - 20px);
+    }
+    .test-mode .camera:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      content: attr(src);
+      color: green;
+    }
+    .failure span {
+      margin-right: 1.5em;
+      color: red;
+    }
+  </style>
+  <script>
+    window.testMode = new URL(document.location.href).searchParams.get('test');
+    window.phone = false;
+    window.tablet = false;
+    window.android = false;
+    window.ios = false;
+    window.desktop = false;
+    window.lockFullWidth = false;
+    let classes = window.document.head.parentNode.classList;
+    if (/iPhone/.test(window.navigator.userAgent)) {
+      window.phone = true;
+      window.ios = true;
+      classes.add('is-phone');
+    } else if (/Android/.test(window.navigator.userAgent)) {
+      window.phone = $(window).width() < 480;
+      window.tablet = !window.phone;
+      window.android = true;
+      classes.add(window.phone ? 'is-phone' : 'is-tablet');
+    } else if (/iPad/.test(window.navigator.userAgent)) {
+      window.tablet = true;
+      classes.add('is-tablet');
+      window.ios = true;
+    } else {
+      window.desktop = true;
+      classes.add('is-desktop');
+    }
+    classes.toggle('is-mobile', !window.desktop);
+    function setupFormat () {
+      let classes = window.document.head.parentNode.classList;
+      if (window.unstageCam) {
+        unstageCam();
+      }
+      if (window.phone && window.innerWidth < window.innerHeight) {
+        classes.add('is-full-width');
+        window.lockFullWidth = true;
+      } else {
+        classes.remove('is-full-width');
+        window.lockFullWidth = false;
+      }
+      if (!window.desktop) {
+        classes.toggle('is-landscape', window.innerWidth > window.innerHeight);
+        classes.toggle('is-portrait', window.innerWidth < window.innerHeight);
+      }
+      classes.toggle('is-test-mode', testMode);
+      if (testMode) {
+        let myClasses = document.head.parentElement.className.split(' ').filter(function (c) {return /^is-/.test(c)}).join(' ');
+        setTimeout(function () { document.body.setAttribute('env-classes', myClasses);}, 750);
+      }
+    }
+    $(window).on('orientationchange', setupFormat);
+    setupFormat();
+  </script>
+</head>
+<body>
+
+  <template id="navItem">
+    <div class="item" item="${zone.slug}" item-id="${id}" sel-item="${selected}">
+      <div class="title">${zone.title}</div>
+    </div>
+  </template>
+
+  <template id="camItem">
+    <div class="cam" source-host="${item.hostSlug}" num="${item.num}" cam-status="loading">
+      <div class="name">${item.name}</div>
+      <div class="time-stamp"></div>
+      <div class="image-container">
+        <img class="camera" src="about:" num="${item.num}"/>
+        <div class="load-error">Image Not Available</div>
+      </div>
+    </div>
+  </template>
+
+  <div class="wrapper">
+    <div class="content">
+      <h2 class="zone-title"></h2>
+      <div class="debug"></div>
+      <div class="stage"></div>
+      <div class="main"></div>
+    </div>
+    <nav>
+    </nav>
+    <div class="global-actions">
+      <button type="button">refresh</button>
+    </div>
+  </div>
+
+  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    const DSTCache = {},
+        STOffset = '-0700',
+        DSTOffset = '-0600',
+        requestProxy = 'https://utah-cams.herokuapp.com/';
+
+    let refreshTimer,
+        refreshGen = null;
+
+
+
+    init();
+
+    /**
+     * returns moment object with timezone set to utah (mountain time) so rendered dates will be consistent
+     *
+     * @param datetime [optional] defaults to now
+     * @returns {moment.Moment}
+     */
+    function utahTime (datetime) {
+      let dt = moment(datetime),
+        year = dt.year(),
+        startEnd = DSTCache[year];
+      if (!startEnd) {
+        let temp = dt.clone().startOf('day').hour(2);
+        startEnd = DSTCache[year] = [temp.month('March').date(7).day('Sunday'),
+          temp.clone().month('November').date(7).day('Sunday')];
+      }
+      return dt.utcOffset(dt.isBefore(startEnd[0]) || dt.isAfter(startEnd[1]) ? STOffset : DSTOffset);
+    }
+
+    function init () {
+      window.camData = loadCams();
+      let storedId = localStorage.zoneId && window.camData[localStorage.zoneId] && localStorage.zoneId;
+      setZone(storedId || Object.keys(window.camData)[0]);
+
+      for (const id of Object.keys(window.camData)) {
+        const zone = camData[id];
+        let item = $(_.template($('#navItem').html())({id:id, zone:zone, selected:getCurrentZone().id === id ? '1' : '0'}));
+        item.appendTo('nav');
+      }
+      if (testMode) {
+        $('html').addClass('test-mode');
+      }
+      initUpdateCamImageTimestamps();
+    }
+
+    function catchTaps () {
+      const tapMaxMS = 200,
+          dblTapSpace= 600,
+          swipeMinX = 50,
+          swipeMinXShow = 25,
+          swipeMaxYXRatio = 0.4;
+      let target = $(),
+          startX = null,
+          startY = null,
+          numTouches = null,
+          startTime = null,
+          prevTapEndedAt = null,
+          curX = null,
+          curY = null,
+          swiping = false,
+          xDelta, xDist, yDist, ratio;
+
+      function handle (evt) {
+        let x = _.get(evt, ['targetTouches', 0, 'screenX'], null),
+            y = _.get(evt, ['targetTouches', 0, 'screenY'], null),
+            numTouches = _.get(evt, ['targetTouches', 'length'], 0);
+
+        if (evt.type === 'touchstart') {
+          startTime = evt.timeStamp;
+          startX = x;
+          startY = y;
+          swiping = false;
+          target = $(/*numTouches === 1 && evt.Target || */ '.content');
+          return;
+        }
+
+        if (evt.type === 'touchmove') {
+          startX = startX || x;
+          startY = startY || y;
+          curX = x || curX;
+          curY = y || curY;
+          xDelta = curX - startX,
+          xDist = Math.abs(startX - curX),
+          yDist =  Math.abs(startY - curY),
+          ratio = yDist / (xDist || 0.000001);
+          if (swiping || xDist > swipeMinXShow) {
+            swiping = true;
+            let opacity = 1 - (xDist > swipeMinXShow && xDist/$('html').width() || 0);
+            target.css({transform: 'translateX(' + xDelta + 'px)', opacity: opacity});
+            console.trace(xDelta);
+            evt.preventDefault();
+          }
+        }
+
+        if (evt.type === 'touchend') {
+          let ts = evt.timeStamp,
+            len = ts - startTime,
+            pause = prevTapEndedAt && ts-prevTapEndedAt;
+          if (len < tapMaxMS) {
+            if (pause && pause < dblTapSpace) {
+              //$('.stage').text(`doubleTap=${ts - prevTapEndedAt}`);
+              if (!window.lockFullWidth) {
+                window.document.head.parentNode.classList.remove('is-full-width');
+              }
+              evt.preventDefault();
+            }
+          } else if (swiping) {
+            prevTapEndedAt = ts;
+            let right = curX > startX;
+            //$('.stage').append(`<div>${evt.type} tap=${len} sx=${startX} x=${xDist} sy=${startY} y=${yDist} ratio=${ratio}</div>`);
+            if (xDist > swipeMinX) {
+              right ? prevZone() : nextZone();
+              evt.preventDefault();
+            }
+          }
+          startX = null;
+          startY = null;
+          startTime = null;
+          curX = null;
+          curY = null;
+          swiping = false;
+          target.css({transform: '', opacity: ''});
+          target = $()
+        }
+
+        //$('.stage').append(`<div>${evt.type} sx=${startX} x=${x} dx=${xDist} sy=${startY} y=${y} dy=${yDist} r=${ratio}</div>`);
+
+      }
+
+      //$('html').on('touchstart touchend touchmove', 'img', handle);
+      $('body').on('touchstart touchend touchmove', handle);
+    }
+
+    catchTaps();
+
+    function setZone (zoneId) {
+      const zone = window.camData[zoneId];
+
+      stopRefresh();
+      $('.stage').html('<div class="staged"></div>');
+
+      $('.zone-title').text(zone.title);
+
+      $('nav [sel-item="1"]').attr('sel-item', '0');
+      $(`nav [item-id="${zoneId}"]`).attr('sel-item', '1');
+
+      $('.main').html('');
+      let num = 0;
+      for (const item of zone.cams) {
+        const frag = $(_.template($('#camItem').html())({zone: zone, zoneId: zoneId, item: item, num: num++}));
+        frag.appendTo('.main');
+        item.node = frag[0];
+        let img = $('img', frag).on('load', function (evt) {
+          $(this).closest('.cam').attr('cam-status', 'loaded');
+        }).on('error', function (evt) {
+          $(this).closest('.cam').attr('cam-status', 'error');
+        }).attr('src', bust(item.url));
+      }
+      window.curZone = zone;
+      window.curId = zoneId;
+      localStorage.zoneId = zoneId;
+      setupRefresh(zone, zoneId);
+    }
+
+    function stopRefresh () {
+      refreshGen = Date.now();
+      clearInterval(refreshTimer);
+      refreshTimer = null;
+    }
+
+    $.ajaxPrefilter(function(options) {
+      if (options.crossDomain && jQuery.support.cors) {
+        options.url = requestProxy + options.url;
+      }
+    });
+
+    function getImageHead (url, context) {
+      return new Promise(function (resolve, reject) {
+        window.req = window.req || [];
+        window.req.push($.ajax({
+              url: requestProxy + (url),
+              method: 'HEAD',
+              crossDomain: true,
+              contentType: '*/*',
+              cache: false,
+              context: context,
+              success: function (data, textStatus, jqXHR) {
+                resolve(Object.assign({}, context || {}, {data: data, status: textStatus, xhr: jqXHR}));
+              },
+              error: function (e) {
+                reject(e);
+              }
+            }));
+      });
+    }
+
+    function getCurrentZone () {
+      return window.camData[window.curId];
+    }
+
+    function setCamImageTimestamp (itemNode, tsXhr, tsFallback) {
+      let ts = moment(tsFallback);
+      if (tsXhr) {
+        try {
+          ts = moment(tsXhr);
+        } catch (e) { }
+      }
+      $('.time-stamp',itemNode)
+        .text(moment.duration(Date.now() - ts).humanize() + ' ago')
+        .data('ts-of-image', ts.valueOf())
+        .addClass('cam-with-timestamp') ;
+    }
+
+    function initUpdateCamImageTimestamps () {
+      setInterval(function () {
+        $('.cam-with-timestamp').each(function () {
+          let it = $(this),
+              ts = it.data('ts-of-image'),
+              dur = moment.duration(Date.now() - ts);
+          it.text(dur.humanize() + ' old')
+        });
+      }, 15000);
+    }
+
+    function checkForRefresh() {
+      let zone = getCurrentZone();
+      Promise.resolve().then(function () {
+        if (zone.prism) {
+          return loadPrismCams(zone.cams, zone);
+        }
+      }).then(function () {
+        for (const item of zone.cams) {
+          if (item && item.state) {
+            Promise.resolve().then(function () {
+              return getImageHead(item.url, {
+                item: item,
+                gen: refreshGen
+              });
+            }).then(function (resp) {
+              if (refreshGen !== resp.gen) {
+                return;
+              }
+              let newState = resp.xhr.getResponseHeader('etag') || resp.xhr.getResponseHeader('last-modified');
+              if (newState && newState !== item.state) {
+                let item = resp.item;
+                item.state = newState;
+                $('.camera',item.node).attr('src', bust(item.url));
+                setCamImageTimestamp(item.node, resp.xhr.getResponseHeader('last-modified'));
+              }
+            }, function (error) {
+              if (refreshGen !== gen) {
+                return;
+              }
+              if (testMode) {
+                $('<div class="failure">')
+                  .append($('<span>').text('failure'))
+                  .append($('<span>').text(zone.id))
+                  .append($('<span>').text(item.name))
+                  .append($('<span>').text(item.url))
+                  .append($('<span>').text(error && error.message || error || 'unknown error'))
+                  .appendTo('.debug');
+              }
+            });
+          }
+        }
+      });
+
+    }
+
+    function setupRefresh (zone, zoneId, options) {
+      const gen = refreshGen,
+          cams = zone.cams;
+
+      for (const item of cams) {
+        item.state = false;
+        getImageHead(item.url).then(function (resp) {
+          let ts = resp.xhr.getResponseHeader('last-modified');
+          item.state = resp.xhr.getResponseHeader('etag') || ts;
+          if (item.node) {
+            setCamImageTimestamp(item.node, ts);
+          }
+          if (!ts) {
+            let all =  resp.xhr.getAllResponseHeaders().split(/\r\n?|\n/);
+            for (let one of all) {
+              console.trace(one);
+            }
+          }
+        }).catch(function () {
+          item.state = null;
+        });
+      }
+      refreshTimer = setInterval(function () {
+        console.log('Refresh timer: ' + Date.now() + ' for "' + getCurrentZone().id + '"');
+        checkForRefresh();
+      }, testMode ? 30000 : 90000);
+    }
+
+    function bust(url) {
+      const earl = new URL(url, document.location.href),
+          now = Date.now(),
+          pts = window.pts || now-1,
+          nts = Math.max(pts, now);
+      window.pts = nts;
+      earl.searchParams.set('t',nts);
+      return earl.toString()
+    }
+
+    function refreshAll () {
+      for (const img of $('.main img')) {
+        img.src = bust(img.src);
+      }
+    }
+
+    function loadCams () {
+      const data = testMode ? window.test_data : window.cam_data;
+      window.zoneIdList = Object.keys(data);
+      window.zonesIndex = {};
+      let zoneNum = 0;
+      for (const id of window.zoneIdList) {
+        const zone = data[id],
+            cams = zone.cams || [];
+        zone.id = id;
+        zone.num = zoneNum++;
+        window.zonesIndex[zone.num] = id;
+        window.zonesIndex[id] = zone.num;
+        window.zonesIndex._last = id;
+        zone.slug = zone.title.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+        zone.cams = cams.map(function (item, num) {
+          return {
+            num: num,
+            name: item[0],
+            url: item[1],
+            hostSlug: (new URL(item[1], document.location.href)).hostname.replace(/[^a-z0-9]+/g,'-')
+          }
+        });
+        if (zone.prism) {
+          loadPrismCams(zone.cams, zone).then(function () {
+            if (getCurrentZone().id === zone.id) {
+              // force refresh
+              setZone(zone.id);
+            }
+          });
+        }
+        console.log(zone.slug);
+      }
+      return data;
+    }
+
+    function nextZone () {
+      let curId = window.curId,
+        curNum = window.zonesIndex[curId],
+        nextZoneId = window.zonesIndex[curNum + 1] || window.zonesIndex[0];
+      setZone(nextZoneId);
+    }
+
+    function prevZone () {
+      let curId = window.curId,
+        curNum = window.zonesIndex[curId],
+        nextZoneId = window.zonesIndex[curNum - 1] || window.zonesIndex._last;
+      setZone(nextZoneId);
+    }
+
+    $('nav .item').on('click', function (evt) {
+      const id = $(this).attr('item-id');
+      setZone(id);
+    });
+
+    $('nav button').on('click', function () {
+      refreshAll();
+    });
+
+    // $('.main').on('click', 'img', function (evt) {
+    //   let it = $(this),
+    //       num = parseInt($(it).attr('num'));
+    //   console.log(num);
+    //   stageCam($(this).closest('.cam'));
+    // });
+
+    setupTaps(function (num, onStage) {
+      if (num && !onStage) {
+        stageCam($(`.cam[num="${num}"]`));
+      }
+    }, function (num, onStage) {
+      if (onStage) {
+        unstageCam();
+      }
+    });
+
+    function unstageCam () {
+      $('html').removeClass('cam-staged');
+      $('.stage').html('');
+    }
+
+    function isStaged (cam) {
+      let num = $(cam).attr('num'),
+          stagedNum = $('.stage .cam').attr('num');
+      return num === stagedNum;
+    }
+
+    function stageCam (cam, click) {
+      if (window.desktop) {
+        let img = $('img.camera', cam),
+            name = $('.name', cam).text(),
+            zoneTitle = $('.zone-title').text();
+        $('html').addClass('cam-staged');
+        $('.stage').html('')
+            .append($('<dive class="stage-title">').text(zoneTitle + ' - ' + name))
+            .append(img.clone().on('click', click || function () {}));
+        window.scrollTo({top: 0});
+      } else {
+        window.document.head.parentNode.classList.add('is-full-width');
+      }
+    }
+
+    if (!phone) {
+      $(document.body).on('pointerover', '.cam', function (evt) {
+        $(this).css({outline: '2px solid gray'});
+      }).on('pointerout', '.cam', function (evt) {
+        $(this).css({outline: ''});
+      });
+    }
+
+    function setupTaps (single, double) {
+
+      const tapMaxTime = 250,
+        tapMaxMove = 75;
+      let prevTapStart,
+        prevTapEnd,
+        prevEvts,
+        curTapStart,
+        curTapEnd,
+        curEvts,
+        tapTimer;
+
+      //pointer events to detect double tap/click
+      $(document.body).on('pointerdown', function (evtS) {
+        if (!curTapEnd || evtS.timeStamp - curTapEnd > tapMaxTime) {
+          prevTapStart = null;
+          prevTapEnd = null;
+          prevEvts = null;
+        } else {
+          prevTapStart = curTapStart;
+          prevTapEnd = curTapEnd;
+          prevEvts = curEvts;
+        }
+        curTapStart = evtS.timeStamp;
+        curTapEnd = null;
+        curEvts = {down: evtS, eaten: false};
+        let up = function (evtE) {
+          curTapEnd = evtE.timeStamp;
+          curEvts.up = evtE;
+          if (curTapEnd - curTapStart < tapMaxTime) {
+            const isDouble = !!prevTapStart,
+              target = $(evtE.target),
+              onStage = !!target.closest('.stage').length,
+              num = target.closest('[num]').attr('num');
+            if (isDouble) {
+              clearTimeout(tapTimer);
+              prevEvts.eaten = true;
+              (double || function () {})(num, onStage);
+              if (testMode) {
+                $('body').append(`<span style="color: ${onStage ? 'red' : 'blue'};">double ${num || 'n/a'}</span>&nbsp;`);
+              }
+            } else {
+              tapTimer = setTimeout(function () {
+                if (!this.eaten) {
+                  if (testMode) {
+                    $('body').append(`<span style="color: ${this.onStage ? 'red' : 'blue'};">tap ${num || 'n/a'}</span>&nbsp;`);
+                  }
+                  (single || function () {})(num, onStage);
+                }
+              }.bind(curEvts), tapMaxTime + 25);
+            }
+          } else {
+            curTapStart = null;
+            $('body').append('<span>nada</span>&nbsp;');
+          }
+          $(document.body).off('pointerup');
+        };
+        $(document.body).off('pointerup');
+        up = $(document.body).on('pointerup', up);
+      });
+    }
+
+    $(document.body).on('keydown', function (evt) {
+      let type = evt.which === 39 ? 'right' :
+          evt.which === 37 ? 'left' : null;
+      if (type && window.desktop) {
+        evt.preventDefault();
+        let staged = $('.stage .camera');
+        if (staged.length) {
+          let num = parseInt(staged.attr('num')),
+              cam,
+              cams = $('.cam[cam-status="loaded"]');
+          for (let i = 0; i < cams.length; i++) {
+            let n = parseInt($(cams[i]).attr('num'));
+            if (n < num && $(cams[i]).attr('cam-status') === 'loaded') {
+              cam = $(cams[i]);
+            } else {
+              if (type === 'left') {
+                if (cam) {
+                  stageCam(cam);
+                  return;
+                } else {
+                  stageCam($('.cam[cam-status="loaded"]:last'));
+                  return;
+                }
+              } else if (type === 'right') {
+                if (n > num) {
+                  stageCam($(cams[i]));
+                  return;
+                }
+              }
+            }
+          }
+          stageCam($('.cam[cam-status="loaded"]:first'));
+          return;
+        } else {
+          if (type==='right') {
+            nextZone();
+          } else if (type==='left') {
+            prevZone();
+          }
+        }
+      }
+      if (evt.which == 90) {
+        stageCam($('.cam:first'));
+      }
+      if (evt.which == 27) {
+        unstageCam();
+      }
+    });
+
+    function loadPrismCams (cams, zone) {
+      return new Promise(function (resolve, reject) {
+        return $.ajax({
+          crossDomain: true,
+          url: requestProxy + zone.prism.metadataUrl,
+          data: zone.prism.metaDataParams,
+          success: function( response ) {
+            window.response = response;
+            let data = JSON.parse(response);
+            let camNum = 0,
+                numChanged = 0;
+            zone.prism.camIndexes = zone.prism.camIndexes || [];
+            for (let value of _.get(data, zone.prism.camFields.collectionPath) || []) {
+              if (value.type !== 'camera') {
+                continue;
+              }
+              let name = _.template(zone.prism.camFields.namePath)(value),
+                  url = _.template(zone.prism.camFields.urlPath)(value);
+              console.log(name);
+              console.log(url);
+              if (zone.prism.camIndexes[camNum] === undefined) {
+                let hostSlug = (new URL(url, document.location.href)).hostname.replace(/[^a-z0-9]+/g,'-');
+                zone.prism.camIndexes[camNum] = zone.cams.length;
+                zone.cams.push({name: name,url: url, num: zone.cams.length, hostSlug: hostSlug});
+                numChanged++;
+              } else {
+                // zone.cams[zone.prism.camIndexes[camNum]] = [name, url];
+                let cam = zone.cams[zone.prism.camIndexes[camNum]];
+                if (cam.url !== url) {
+                  cam.urlChanged = true;
+                  cam.state = 'url-changed';
+                  numChanged++;
+                }
+                Object.assign(cam, {name: name, url: url});
+              }
+              camNum++;
+            }
+            resolve(numChanged);
+          },
+          error: function (error) {
+            if (testMode) {
+              console.error(error);
+            }
+            resolve(0);
+          }
+        });
+      });
+    }
+
+  </script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-71689248-1', 'auto'); ga('send', 'zoneview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+</body>
+
+</html>
