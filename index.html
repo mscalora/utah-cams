@@ -13,13 +13,8 @@
   <meta property="og:type" content="website"/>
   <meta property="og:description" content="View a related group of webcams in Utah on a single page. Public webcams provided by UDOT and Utah businesses and organizations."/>
 
-  <link rel="manifest" href="site.webmanifest">
-  <!--<link rel="apple-touch-icon" href="icon.png">-->
-  <!-- Place favicon.ico in the root directory -->
-
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
@@ -76,6 +71,14 @@
     .zone-title {
       margin: 0;
       padding: 6px 10px;
+      text-align: center;
+    }
+    .zone-subtitle.empty {
+        display: none;
+    }
+    .zone-subtitle {
+      margin: 5px;
+      font-size: 75%;
       text-align: center;
     }
     .stage-title {
@@ -281,6 +284,7 @@
   <div class="wrapper">
     <div class="content">
       <h2 class="zone-title"></h2>
+      <div class="zone-subtitle"></div>
       <div class="debug"></div>
       <div class="stage"></div>
       <div class="main"></div>
@@ -434,27 +438,42 @@
     catchTaps();
 
     function setZone (zoneId) {
-      const zone = window.camData[zoneId];
+      const zone = window.camData[zoneId],
+          subtitle = _.get(zone, 'subtitle', ''),
+          subtitleHtml = _.get(zone, 'subtitle_html', '');
 
       stopRefresh();
       $('.stage').html('<div class="staged"></div>');
 
       $('.zone-title').text(zone.title);
 
+      $('.zone-subtitle').text(subtitle).html(subtitleHtml).toggleClass('empty', !(subtitle+subtitleHtml));
+
       $('nav [sel-item="1"]').attr('sel-item', '0');
       $(`nav [item-id="${zoneId}"]`).attr('sel-item', '1');
 
-      $('.main').html('');
+
       let num = 0;
-      for (const item of zone.cams) {
-        const frag = $(_.template($('#camItem').html())({zone: zone, zoneId: zoneId, item: item, num: num++}));
-        frag.appendTo('.main');
-        item.node = frag[0];
-        let img = $('img', frag).on('load', function (evt) {
-          $(this).closest('.cam').attr('cam-status', 'loaded');
-        }).on('error', function (evt) {
-          $(this).closest('.cam').attr('cam-status', 'error');
-        }).attr('src', bust(item.url));
+      if (zone.special) {
+        let html = _.get(zone, 'special.html', '<center>error<</center>'),
+            subtitle = _.get(zone, 'special.subtitle', ''),
+            refresh = _.get(zone, 'special.refresh', 'null');
+        $('.main').html(html);
+        if (refresh) {
+          refresh(zone);
+        }
+      } else {
+        $('.main').html('');
+        for (const item of zone.cams) {
+          const frag = $(_.template($('#camItem').html())({zone: zone, zoneId: zoneId, item: item, num: num++}));
+          frag.appendTo('.main');
+          item.node = frag[0];
+          let img = $('img', frag).on('load', function (evt) {
+            $(this).closest('.cam').attr('cam-status', 'loaded');
+          }).on('error', function (evt) {
+            $(this).closest('.cam').attr('cam-status', 'error');
+          }).attr('src', bust(item.url));
+        }
       }
       window.curZone = zone;
       window.curId = zoneId;
@@ -522,11 +541,18 @@
       }, 15000);
     }
 
+    /*
+        <link rel="stylesheet" href="//js.prismcam.com/violet.css">
+        <script type="text/javascript" src="//js.prismcam.com/violet.js"></scr-i-pt>
+        <div id="violet-1546311408" cam="75" data-mode="embed"></div>
+        <div id="violet-1546311408" cam="74" data-mode="embed"></div>
+    */
+
     function checkForRefresh() {
       let zone = getCurrentZone();
       Promise.resolve().then(function () {
-        if (zone.prism) {
-          return loadPrismCams(zone.cams, zone);
+        if (zone.special) {
+          return; // self updating
         }
       }).then(function () {
         for (const item of zone.cams) {
@@ -633,14 +659,28 @@
             hostSlug: (new URL(item[1], document.location.href)).hostname.replace(/[^a-z0-9]+/g,'-')
           }
         });
-        if (zone.prism) {
-          loadPrismCams(zone.cams, zone).then(function () {
-            if (getCurrentZone().id === zone.id) {
-              // force refresh
-              setZone(zone.id);
+
+        if (zone.special) {
+          if (!zone.loaded) {
+            let css = _.get(zone, 'special.css', []),
+                js = _.get(zone, 'special.js', []),
+                subtitle = _.get(zone, 'special.subtitle', []);
+            for (let src of _.isString(css) ? [css] : css) {
+              let node = document.createElement('link');
+              node.rel = 'stylesheet';
+              node.href = src;
+              (document.head || document.body).appendChild(node);
             }
-          });
+            for (let src of _.isString(js) ? [js] : js) {
+              let node = document.createElement('script');
+              node.type = 'text/javascript';
+              node.src = src;
+              (document.head || document.body).appendChild(node);
+            }
+            zone.loaded = true;
+          }
         }
+
         console.log(zone.slug);
       }
       return data;
@@ -830,55 +870,6 @@
         unstageCam();
       }
     });
-
-    function loadPrismCams (cams, zone) {
-      return new Promise(function (resolve, reject) {
-        return $.ajax({
-          crossDomain: true,
-          url: requestProxy + zone.prism.metadataUrl,
-          data: zone.prism.metaDataParams,
-          success: function( response ) {
-            window.response = response;
-            let data = JSON.parse(response);
-            let camNum = 0,
-                numChanged = 0;
-            zone.prism.camIndexes = zone.prism.camIndexes || [];
-            for (let value of _.get(data, zone.prism.camFields.collectionPath) || []) {
-              if (value.type !== 'camera') {
-                continue;
-              }
-              let name = _.template(zone.prism.camFields.namePath)(value),
-                  url = _.template(zone.prism.camFields.urlPath)(value);
-              console.log(name);
-              console.log(url);
-              if (zone.prism.camIndexes[camNum] === undefined) {
-                let hostSlug = (new URL(url, document.location.href)).hostname.replace(/[^a-z0-9]+/g,'-');
-                zone.prism.camIndexes[camNum] = zone.cams.length;
-                zone.cams.push({name: name,url: url, num: zone.cams.length, hostSlug: hostSlug});
-                numChanged++;
-              } else {
-                // zone.cams[zone.prism.camIndexes[camNum]] = [name, url];
-                let cam = zone.cams[zone.prism.camIndexes[camNum]];
-                if (cam.url !== url) {
-                  cam.urlChanged = true;
-                  cam.state = 'url-changed';
-                  numChanged++;
-                }
-                Object.assign(cam, {name: name, url: url});
-              }
-              camNum++;
-            }
-            resolve(numChanged);
-          },
-          error: function (error) {
-            if (testMode) {
-              console.error(error);
-            }
-            resolve(0);
-          }
-        });
-      });
-    }
 
   </script>
 
